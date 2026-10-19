@@ -1,5 +1,5 @@
 <p align="center">
-  <a>
+  <a href="#!">
     <img src="./assets/banner-v2.gif" alt="A black cat enjoying a gentle breeze with football, basketball, and roses — xp2001-coder" width="100%" />
   </a>
 </p>
