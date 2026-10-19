@@ -1,6 +1,10 @@
+<!-- The banner plays automatically. Keep its link on this page: GitHub otherwise opens the image viewer. -->
 <p align="center">
   <a href="#!">
-    <img src="./assets/banner-v2.gif" alt="A black cat enjoying a gentle breeze with football, basketball, and roses — xp2001-coder" width="100%" />
+    <picture>
+      <source media="(prefers-reduced-motion: reduce)" srcset="./assets/banner-static.png" />
+      <img src="./assets/banner-v2.gif" alt="xp2001-coder — a black cat blinking in a gentle breeze, with a flowing scarf and softly rocking football and basketball" width="100%" />
+    </picture>
   </a>
 </p>
 
