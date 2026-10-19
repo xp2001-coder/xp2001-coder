@@ -1,16 +1,14 @@
-## Hi there 👋
+<p align="center">
+  <a href="https://xp2001-coder.github.io/xp2001-coder/">
+    <img src="./assets/banner-v2.gif" alt="A black cat enjoying a gentle breeze with football, basketball, and roses — xp2001-coder" width="100%" />
+  </a>
+</p>
 
-<!--
-**xp2001-coder/xp2001-coder** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+I work on AI infrastructure, model quantization, inference performance, and distributed LLM systems.
 
-Here are some ideas to get you started:
+### Selected Work
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+- **Model Quantization** — Research and tooling · [LLMC](https://github.com/ModelTC/LightCompress) · [MQBench](https://github.com/ModelTC/MQBench) · [PPQ](https://github.com/OpenPPL/ppq)
+- **LLM Inference & GPU Kernels** — Runtime performance and MACA backend work · `C++ / Python / CUDA / MACA` · [vLLM](https://github.com/xp2001-coder/vllm) · [SGLang](https://github.com/xp2001-coder/sglang) · [llama.cpp](https://github.com/xp2001-coder/llama.cpp)
+- **Distributed Inference** — KV-cache transport and distributed serving · [Mooncake](https://github.com/xp2001-coder/Mooncake)
+- **Learning Notes** — [zero2vllm](https://github.com/xp2001-coder/zero2vllm) · Inference systems from first principles.

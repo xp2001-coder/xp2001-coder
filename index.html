@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="xp2001-coder · A little breeze, a curious black cat, football, basketball and code." />
+  <title>xp2001-coder</title>
+  <style>
+    :root { color-scheme: light; --ink: #24292f; --muted: #6e7781; --red: #b43f39; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .shell { max-width: 1320px; margin: 0 auto; padding: 12px clamp(14px, 2.7vw, 36px) 24px; }
+    .scene { position: relative; width: 100%; aspect-ratio: 3 / 1; overflow: hidden; isolation: isolate; background: #fdf9ef; }
+    .scene video, .scene .static { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+    .scene .static { display: none; }
+    .sprite { position: absolute; pointer-events: none; opacity: 0; z-index: 5; will-change: transform, opacity; transform-origin: 50% 70%; }
+    #eyes { left: 27.5%; top: 21.25%; width: 16.3333%; height: 35.25%; }
+    #football { left: 14%; top: 58.25%; width: 11.75%; height: 32.75%; }
+    #basketball { left: 41.5%; top: 53.75%; width: 14.25%; height: 36.25%; }
+    .sprite.blink { animation: blink .48s ease both; }
+    .sprite.kick { animation: kick .85s cubic-bezier(.21,.74,.2,1) both; }
+    .sprite.bounce { animation: bounce .88s cubic-bezier(.17,.68,.22,1) both; }
+    @keyframes blink { 0%,16%,81%,100% { opacity: 0; } 34%,59% { opacity: 1; } }
+    @keyframes kick { 0% { opacity: 0; transform: translate(0,0) rotate(0); } 9% { opacity: 1; } 32% { opacity: 1; transform: translate(7%,-5%) rotate(8deg); } 72% { opacity: 1; transform: translate(-2%,0) rotate(-2deg); } 100% { opacity: 0; transform: none; } }
+    @keyframes bounce { 0% { opacity: 0; transform: none; } 10% { opacity: 1; } 33% { opacity: 1; transform: translateY(-6%) rotate(-5deg); } 58% { opacity: 1; transform: translateY(0) rotate(2deg); } 100% { opacity: 0; transform: none; } }
+    .hotspot { position: absolute; z-index: 7; cursor: pointer; border: 0; background: transparent; border-radius: 50%; color: transparent; padding: 0; touch-action: manipulation; }
+    .hotspot:hover{background:rgba(255,245,216,.06)}
+    .hotspot:focus-visible{outline:4px solid var(--red);outline-offset:-5px;background:rgba(255,255,255,.1)}
+    .hotspot.cat { left: 27%; top: 12%; width: 19%; height: 75%; }
+    .hotspot.soccer { left: 14%; top: 57%; width: 13%; height: 35%; }
+    .hotspot.basket { left: 41.5%; top: 54%; width: 15%; height: 38%; }
+    .particle { position: absolute; z-index: 8; pointer-events: none; width: clamp(7px,1vw,13px); height: clamp(9px,1.3vw,18px); border-radius: 10% 85% 12% 76%; background: var(--tone,#b94843); opacity: 0; transform: translate(-50%,-50%); animation: petal 1.42s cubic-bezier(.18,.57,.27,1) forwards; }
+    @keyframes petal { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.35) rotate(0); } 12% { opacity: .87; } 75% { opacity: .84; } 100% { opacity: 0; transform: translate(calc(-50% + var(--dx,30px)),calc(-50% + var(--dy,-20px))) scale(.72) rotate(var(--r,200deg)); } }
+    .speech { position: absolute; z-index: 9; pointer-events: none; white-space: nowrap; font-size: clamp(12px,2.5vw,28px); font-weight: 800; color: var(--red); filter: drop-shadow(1px 2px 1px #fff7); transform: translate(-50%,0); animation: speech 1.25s ease-out forwards; }
+    @keyframes speech { 0% { opacity: 0; transform: translate(-50%,14px) scale(.7); } 22% { opacity: 1; transform: translate(-50%,-9px) scale(1.05); } 78% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%,-42px) scale(.98); } }
+    .bio { max-width: 1120px; margin-top: 13px; color: var(--ink); font-size: clamp(15px,1.65vw,18px); line-height: 1.7; }
+    .bio p { margin: 0; }
+    .selected-work { margin-top: 22px; }
+    .selected-work h2 { margin: 0 0 10px; font-size: 21px; font-weight: 600; line-height: 1.35; }
+    .selected-work ul { margin: 0; padding-left: 1.35em; }
+    .selected-work li { padding-left: 2px; margin: 5px 0; font-size: clamp(15px,1.55vw,17px); line-height: 1.65; }
+    .selected-work strong { font-weight: 600; }
+    .selected-work code { padding: 2px 5px; border-radius: 5px; background: #f6f8fa; color: #24292f; font-size: .88em; white-space: nowrap; }
+    .selected-work a { color: #0969da; text-decoration: none; white-space: nowrap; }
+    .selected-work a:hover { text-decoration: underline; }
+    .bio a { color: #0969da; text-decoration: none; }
+    .bio a:hover { text-decoration: underline; }
+    a:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+    #live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    @media (max-width: 730px) { .shell { padding: 12px; } .bio { margin-top: 11px; font-size: 15px; line-height: 1.6; } }
+    @media (prefers-reduced-motion: reduce) { .scene video { display: none; } .scene .static { display: block; } .sprite, .particle, .speech { display: none !important; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section aria-label="微风中的小黑猫动画横幅">
+      <div class="scene" id="scene">
+        <video id="banner" autoplay muted loop playsinline preload="auto" poster="assets/banner-static.png" aria-label="红白围巾小黑猫在微风中眨眼，篮球、足球、花瓣轻轻晃动。">
+          <source src="assets/banner-v2.mp4" type="video/mp4">
+        </video>
+        <img class="static" id="fallback" src="assets/banner-static.png" width="1200" height="400" alt="原创小黑猫、足球、玫瑰篮球与球场暖色横幅" />
+        <img class="sprite" id="eyes" src="assets/cat-blink.png" alt="" aria-hidden="true" />
+        <img class="sprite" id="football" src="assets/football-sprite.png" alt="" aria-hidden="true" />
+        <img class="sprite" id="basketball" src="assets/basketball-sprite.png" alt="" aria-hidden="true" />
+        <button class="hotspot cat" type="button" data-action="cat" aria-label="轻轻摸小猫，让它眨眼"></button>
+        <button class="hotspot soccer" type="button" data-action="football" aria-label="轻碰足球，让它晃一下"></button>
+        <button class="hotspot basket" type="button" data-action="basketball" aria-label="轻碰篮球，让玫瑰花瓣飘散"></button>
+      </div>
+</section>
+<div class="bio"><p>I work on AI infrastructure, model quantization, inference performance, and distributed LLM systems.</p></div>
+    <section class="selected-work" aria-labelledby="selected-work-title">
+      <h2 id="selected-work-title">Selected Work</h2>
+      <ul>
+        <li><strong>Model Quantization</strong> — Research and tooling · <a href="https://github.com/ModelTC/LightCompress">LLMC</a> · <a href="https://github.com/ModelTC/MQBench">MQBench</a> · <a href="https://github.com/OpenPPL/ppq">PPQ</a></li>
+        <li><strong>LLM Inference &amp; GPU Kernels</strong> — Runtime performance and MACA backend work · <code>C++ / Python / CUDA / MACA</code> · <a href="https://github.com/xp2001-coder/vllm">vLLM</a> · <a href="https://github.com/xp2001-coder/sglang">SGLang</a> · <a href="https://github.com/xp2001-coder/llama.cpp">llama.cpp</a></li>
+        <li><strong>Distributed Inference</strong> — KV-cache transport and distributed serving · <a href="https://github.com/xp2001-coder/Mooncake">Mooncake</a></li>
+        <li><strong>Learning Notes</strong> — <a href="https://github.com/xp2001-coder/zero2vllm">zero2vllm</a> · Inference systems from first principles.</li>
+      </ul>
+    </section>
+    <span id="live" class="eyebrow" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;"></span>
+  </main>
+  <script>
+  (()=>{
+    const scene=document.getElementById('scene');
+    const video=document.getElementById('banner');
+    const fallback=document.getElementById('fallback');
+    const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+    const live=document.getElementById('live');
+    const sprites={cat:document.getElementById('eyes'),football:document.getElementById('football'),basketball:document.getElementById('basketball')};
+    const classes={cat:'blink',football:'kick',basketball:'bounce'};
+    const points={cat:[37,35],football:[20,70],basketball:[50,65]};
+    const notes={cat:['喵～','🐾','♡'],football:['GOAL!','⚽'],basketball:['🌹','Swish!']};
+    const colors=['#bd443d','#d7644d','#7c9258','#d8a16b','#a53d42'];
+    let count=0;
+    const showFallback=()=>{video.style.display='none';fallback.style.display='block';};
+    video.addEventListener('error',showFallback);
+    const source=video.querySelector('source');source.addEventListener('error',showFallback);
+    if(reduced.matches){video.pause();showFallback();}
+    reduced.addEventListener?.('change',e=>{if(e.matches){video.pause();showFallback()}else{fallback.style.display='none';video.style.display='block';video.play().catch(()=>{})}});
+    const pop=(x,y,msg)=>{
+      const el=document.createElement('span');el.className='speech';el.textContent=msg;
+      el.style.left=x+'%';el.style.top=y+'%';scene.append(el);
+      el.addEventListener('animationend',()=>el.remove(),{once:true});
+      setTimeout(()=>el.remove(),1700);
+    };
+    const petals=(x,y,n)=>{
+      const box=scene.getBoundingClientRect();
+      const unit=box.width/1200;
+      for(let i=0;i<n;i++){
+        const p=document.createElement('span');p.className='particle';
+        p.style.left=x+'%';p.style.top=y+'%';
+        p.style.setProperty('--tone',colors[(i+count)%colors.length]);
+        let angle=2*Math.PI*(i+.25)/n+count*.3;
+        let distance=(55+(i%4)*18)*unit;
+        p.style.setProperty('--dx',(Math.cos(angle)*distance+28*unit)+'px');
+        p.style.setProperty('--dy',(Math.sin(angle)*distance-28*unit)+'px');
+        p.style.setProperty('--r',((i*73+count*23)%360)+'deg');
+        scene.append(p);
+        p.addEventListener('animationend',()=>p.remove(),{once:true});
+        setTimeout(()=>p.remove(),1800);
+      }
+    };
+    function react(action){
+      count++;const [x,y]=points[action];
+      live.textContent=action==='cat'?'小猫轻轻眨了一下眼。':action==='football'?'足球轻轻晃动。':'篮球轻轻弹起，玫瑰花瓣飘过。';
+      if(reduced.matches) return;
+      const image=sprites[action];
+      image.classList.remove(classes[action]);
+      void image.offsetWidth; // allow retriggering on consecutive clicks
+      image.classList.add(classes[action]);
+      pop(x,y-17,notes[action][count%notes[action].length]);
+      petals(x,y,action==='cat'?5:action==='football'?7:11);
+    }
+    document.querySelectorAll('[data-action]').forEach(button=>button.addEventListener('click',()=>react(button.dataset.action)));
+  })();
+  </script>
+</body>
+</html>
