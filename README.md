@@ -16,3 +16,8 @@ I work on AI infrastructure, model quantization, inference performance, and dist
 - **LLM Inference & GPU Kernels** — Runtime performance and MACA backend work · `C++ / Python / CUDA / MACA` · [vLLM](https://github.com/xp2001-coder/vllm) · [SGLang](https://github.com/xp2001-coder/sglang) · [llama.cpp](https://github.com/xp2001-coder/llama.cpp)
 - **Distributed Inference** — KV-cache transport and distributed serving · [Mooncake](https://github.com/xp2001-coder/Mooncake)
 - **Learning Notes** — [zero2vllm](https://github.com/xp2001-coder/zero2vllm) · Inference systems from first principles.
+
+### Open Source
+
+- **[Mooncake](https://github.com/kvcache-ai/Mooncake)** — Proposed Transfer Engine fixes for MACA IPC locality, deferred batch cleanup, and protocol-aware buffer metadata removal. · [#4678](https://github.com/kvcache-ai/Mooncake/pull/4678) · [#4712](https://github.com/kvcache-ai/Mooncake/pull/4712) · [#4738](https://github.com/kvcache-ai/Mooncake/pull/4738)
+- **[llama.cpp](https://github.com/ggml-org/llama.cpp)** — Responsible for MACA backend integration, maintenance, and inference optimization on MetaX GPUs.
